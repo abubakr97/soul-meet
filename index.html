@@ -1,9 +1,12 @@
+```html
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لقاء الأرواح</title>
+    <title>Flutter App Preview - لقاء الأرواح</title>
+    <!-- Google Fonts & Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
     <style>
         * {
@@ -48,12 +51,12 @@
             border-radius: 24px;
             text-align: center;
             box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-            max-width: 350px;
+            max-width: 360px;
             width: 90%;
         }
 
         .lock-box h2 {
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             font-size: 22px;
             color: #ffb7c5;
         }
@@ -91,7 +94,11 @@
             transition: 0.3s;
         }
 
-        /* الكانفاس للألعاب النارية */
+        .lock-box button:hover {
+            opacity: 0.9;
+        }
+
+        /* الكانفاس للألعاب النارية في الأمام وبتفاعل غير حجب للنصوص */
         #fireworks-canvas {
             position: fixed;
             top: 0;
@@ -99,7 +106,7 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 5;
+            z-index: 50; /* وضعها فوق العناصر لإعطاء تأثير رائع */
         }
 
         /* حاوية الويب الأساسية */
@@ -181,37 +188,52 @@
             background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 20px;
-            padding: 25px 20px;
+            padding: 25px 20px 15px 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
             position: relative;
+            overflow: hidden;
         }
 
         .avatars-container {
             display: flex;
             justify-content: space-between;
             width: 100%;
-            align-items: center;
-            margin-bottom: 20px;
+            align-items: flex-end;
             position: relative;
+            min-height: 85px;
+            margin-bottom: 8px;
         }
 
         .person-info {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
+            gap: 4px;
             z-index: 2;
+            transition: transform 0.3s ease-out;
+            position: absolute;
+            bottom: 0;
         }
 
+        .person-info.p1-box {
+            right: 0;
+        }
+
+        .person-info.p2-box {
+            left: 0;
+        }
+
+        /* صور صغيرة محاذية للشريط */
         .avatar-wrapper {
-            width: 75px;
-            height: 75px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
-            padding: 3px;
+            padding: 2px;
             position: relative;
             transition: all 0.5s ease;
+            background: #1a1c29;
         }
 
         .avatar-img {
@@ -223,16 +245,11 @@
         }
 
         .person-name {
-            font-size: 16px;
+            font-size: 12px;
             font-weight: 700;
         }
 
-        /* حركة الدوران الحلزوني عند اللقاء */
-        .fusing .avatars-container {
-            justify-content: center;
-            gap: 0;
-        }
-
+        /* حركة الدوران الحلزوني عند الاكتمال */
         .fusing .avatar-wrapper.person1 {
             animation: spiralRotateLeft 3s infinite linear;
         }
@@ -242,23 +259,24 @@
         }
 
         @keyframes spiralRotateLeft {
-            0% { transform: rotate(0deg) translateX(20px) rotate(0deg); }
-            100% { transform: rotate(360deg) translateX(20px) rotate(-360deg); }
+            0% { transform: rotate(0deg) translateX(10px) rotate(0deg); }
+            100% { transform: rotate(360deg) translateX(10px) rotate(-360deg); }
         }
 
         @keyframes spiralRotateRight {
-            0% { transform: rotate(0deg) translateX(-20px) rotate(0deg); }
-            100% { transform: rotate(360deg) translateX(-20px) rotate(-360deg); }
+            0% { transform: rotate(0deg) translateX(-10px) rotate(0deg); }
+            100% { transform: rotate(360deg) translateX(-10px) rotate(-360deg); }
         }
 
         .progress-track-bg {
-            width: 90%;
+            width: 100%;
             height: 8px;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 4px;
             position: relative;
             overflow: hidden;
-            margin-bottom: 10px;
+            margin-top: 4px;
+            margin-bottom: 8px;
         }
 
         .progress-fill-right {
@@ -266,8 +284,9 @@
             top: 0;
             right: 0;
             height: 100%;
-            width: 50%;
+            width: 0%;
             border-radius: 4px 0 0 4px;
+            transition: width 0.3s ease-out;
         }
 
         .progress-fill-left {
@@ -275,14 +294,15 @@
             top: 0;
             left: 0;
             height: 100%;
-            width: 50%;
+            width: 0%;
             border-radius: 0 4px 4px 0;
+            transition: width 0.3s ease-out;
         }
 
         .progress-status {
             font-size: 13px;
             color: #aaa;
-            margin-top: 5px;
+            margin-top: 4px;
         }
 
         /* العداد */
@@ -349,6 +369,26 @@
 
         .action-btn:hover {
             opacity: 0.9;
+        }
+
+        /* رسالة التنبيه العائمة */
+        #custom-alert {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            background: rgba(255, 117, 140, 0.95);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 700;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            z-index: 10000;
+            transition: transform 0.3s ease;
+        }
+
+        #custom-alert.show {
+            transform: translateX(-50%) translateY(0);
         }
 
         /* نافذة الإعدادات */
@@ -458,6 +498,10 @@
 </head>
 <body>
 
+    <!-- التنبيه العائم -->
+    <div id="custom-alert">رمز السر غير صحيح!</div>
+
+    <!-- شاشة القفل بكلمة السر -->
     <div id="lock-screen">
         <div class="lock-box">
             <h2>🔒 منطقة خاصة</h2>
@@ -467,8 +511,10 @@
         </div>
     </div>
 
+    <!-- الكانفاس للألعاب النارية واضحة وفي الأمام -->
     <canvas id="fireworks-canvas"></canvas>
 
+    <!-- حاوية الويب الأساسية -->
     <div class="web-container">
         <div class="app-header">
             <button class="icon-btn" onclick="lockApp()" title="قفل">🔒</button>
@@ -482,19 +528,19 @@
             </div>
 
             <div class="track-card" id="track-card-el">
-                <div class="avatars-container">
-                    <div class="person-info">
-                        <div class="avatar-wrapper person1" id="wrap-p1">
-                            <img id="display-img-p1" src="./p1.jpg" class="avatar-img">
-                        </div>
+                <div class="avatars-container" id="avatars-container">
+                    <div class="person-info p1-box" id="p1-box">
                         <span class="person-name" id="display-name-p1">ابوبكر</span>
+                        <div class="avatar-wrapper person1" id="wrap-p1">
+                            <img id="display-img-p1" src="./p1.jpg" onerror="this.src='https://placehold.co/150x150/6ee7b7/0d0f18?text=%D8%A7%D8%A8%D9%88%D8%A8%D9%83%D8%B1'" class="avatar-img">
+                        </div>
                     </div>
 
-                    <div class="person-info">
-                        <div class="avatar-wrapper person2" id="wrap-p2">
-                            <img id="display-img-p2" src="./p2.jpg" class="avatar-img">
-                        </div>
+                    <div class="person-info p2-box" id="p2-box">
                         <span class="person-name" id="display-name-p2">مارية</span>
+                        <div class="avatar-wrapper person2" id="wrap-p2">
+                            <img id="display-img-p2" src="./p2.jpg" onerror="this.src='https://placehold.co/150x150/ff758c/0d0f18?text=%D9%85%D8%A7%D8%B1%D9%8A%D8%A9'" class="avatar-img">
+                        </div>
                     </div>
                 </div>
 
@@ -523,6 +569,7 @@
         </div>
     </div>
 
+    <!-- نافذة الإعدادات -->
     <div class="modal" id="settings-modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -573,8 +620,15 @@
         };
 
         let config = {...defaultSettings};
-        const saved = localStorage.getItem('soul_meet_config_v4');
+        const saved = localStorage.getItem('soul_meet_config_v5');
         if (saved) { try { config = JSON.parse(saved); } catch(e){} }
+
+        function showAlert(msg) {
+            const el = document.getElementById('custom-alert');
+            el.innerText = msg;
+            el.classList.add('show');
+            setTimeout(() => el.classList.remove('show'), 3000);
+        }
 
         function initUI() {
             const d = new Date(config.targetDate);
@@ -590,8 +644,10 @@
             document.getElementById('display-quote').style.color = config.textColor;
             document.getElementById('display-name-p1').style.color = config.colorP1;
             document.getElementById('display-name-p2').style.color = config.colorP2;
-            document.getElementById('wrap-p1').style.boxShadow = `0 0 15px ${config.colorP1}`;
-            document.getElementById('wrap-p2').style.boxShadow = `0 0 15px ${config.colorP2}`;
+            document.getElementById('wrap-p1').style.boxShadow = `0 0 12px ${config.colorP1}`;
+            document.getElementById('wrap-p2').style.boxShadow = `0 0 12px ${config.colorP2}`;
+            document.getElementById('wrap-p1').style.border = `2px solid ${config.colorP1}`;
+            document.getElementById('wrap-p2').style.border = `2px solid ${config.colorP2}`;
             document.getElementById('fill-p1').style.background = `linear-gradient(90deg, transparent, ${config.colorP1})`;
             document.getElementById('fill-p2').style.background = `linear-gradient(270deg, transparent, ${config.colorP2})`;
 
@@ -609,7 +665,7 @@
                 document.getElementById('lock-screen').style.opacity = '0';
                 setTimeout(() => document.getElementById('lock-screen').style.display = 'none', 500);
             } else {
-                alert('كلمة السر غير صحيحة!');
+                showAlert('رمز السر غير صحيح!');
             }
         }
 
@@ -620,21 +676,37 @@
         }
 
         let isCelebrating = false;
+        let isZeroReached = false; // متغير للتحقق من وصول العداد للصفر
+
         function updateTimer() {
             const now = new Date().getTime();
             const target = new Date(config.targetDate).getTime();
             const diff = target - now;
 
-            if (diff <= 0) {
+            const containerWidth = document.getElementById('avatars-container').offsetWidth || 350;
+            const avatarWidth = 50;
+            const maxShift = (containerWidth / 2) - (avatarWidth / 2);
+
+            if (diff <= 0 || isCelebrating) {
+                isZeroReached = true;
                 document.getElementById('cd-days').innerText = "00";
                 document.getElementById('cd-hours').innerText = "00";
                 document.getElementById('cd-mins').innerText = "00";
                 document.getElementById('cd-secs').innerText = "00";
                 document.getElementById('progress-status-text').innerText = "✨ اكتمل اللقاء واندماج الأرواح ✨";
+
+                document.getElementById('p1-box').style.transform = `translateX(-${maxShift}px)`;
+                document.getElementById('p2-box').style.transform = `translateX(${maxShift}px)`;
+
+                document.getElementById('fill-p1').style.width = '50%';
+                document.getElementById('fill-p2').style.width = '50%';
+
                 document.getElementById('track-card-el').classList.add('fusing');
-                if (!isCelebrating) toggleCelebration(true);
                 return;
             }
+
+            isZeroReached = false;
+            document.getElementById('track-card-el').classList.remove('fusing');
 
             document.getElementById('cd-days').innerText = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(2, '0');
             document.getElementById('cd-hours').innerText = String(Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
@@ -643,15 +715,21 @@
 
             const start = new Date("2026-01-01T00:00:00").getTime();
             let progress = Math.max(0, Math.min(1, (now - start) / (target - start)));
+
             const fillVal = (progress * 50).toFixed(1) + '%';
             document.getElementById('fill-p1').style.width = fillVal;
             document.getElementById('fill-p2').style.width = fillVal;
+
+            const shiftPX = (progress * maxShift).toFixed(1);
+            document.getElementById('p1-box').style.transform = `translateX(-${shiftPX}px)`;
+            document.getElementById('p2-box').style.transform = `translateX(${shiftPX}px)`;
+
             document.getElementById('progress-status-text').innerText = `نسبة التقارب: ${(progress * 100).toFixed(2)}%`;
         }
 
         setInterval(updateTimer, 1000);
 
-        // الألعاب النارية
+        // إعدادات الألعاب النارية المحدثة بدقة
         const canvas = document.getElementById('fireworks-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
@@ -662,46 +740,60 @@
 
         class Particle {
             constructor(x, y, color) {
-                this.x = x; this.y = y; this.color = color;
+                this.x = x; 
+                this.y = y; 
+                this.color = color;
                 const angle = Math.random() * Math.PI * 2;
-                const speed = Math.random() * 5 + 2;
+                const speed = Math.random() * 2.5 + 1; // سرعة أهدأ
                 this.vx = Math.cos(angle) * speed;
                 this.vy = Math.sin(angle) * speed;
-                this.alpha = 1;
-                this.decay = Math.random() * 0.015 + 0.008;
+                this.alpha = 0.7; // شفافية ألطف في الأمام
+                this.decay = Math.random() * 0.012 + 0.008;
             }
-            update() { this.x += this.vx; this.y += this.vy; this.vy += 0.05; this.alpha -= this.decay; }
+            update() { 
+                this.x += this.vx; 
+                this.y += this.vy; 
+                this.vy += 0.02; // الجاذبية
+                this.alpha -= this.decay; 
+            }
             draw() {
-                ctx.save(); ctx.globalAlpha = Math.max(0, this.alpha);
-                ctx.beginPath(); ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
-                ctx.fillStyle = this.color; ctx.fill(); ctx.restore();
+                ctx.save(); 
+                ctx.globalAlpha = Math.max(0, this.alpha);
+                ctx.beginPath(); 
+                ctx.arc(this.x, this.y, 2, 0, Math.PI * 2); // حجم أنيق وهادئ
+                ctx.fillStyle = this.color; 
+                ctx.fill(); 
+                ctx.restore();
             }
         }
 
         function createFirework() {
-            if (!isCelebrating) return;
+            // الانطلاق ينشط فقط عند الصفر أو بتبديل الزر
+            if (!isZeroReached && !isCelebrating) return;
+
             const x = Math.random() * canvas.width;
             const y = Math.random() * (canvas.height * 0.6);
-            const colors = [config.colorP1, config.colorP2, config.textColor, '#ffffff'];
+            const colors = [config.colorP1, config.colorP2, config.textColor, '#ffffff', '#ffd700', '#a7f3d0'];
             const color = colors[Math.floor(Math.random() * colors.length)];
-            for (let i = 0; i < 35; i++) particles.push(new Particle(x, y, color));
+            const count = 25; // عدد هادئ وأنيق للجسيمات
+            for (let i = 0; i < count; i++) particles.push(new Particle(x, y, color));
         }
 
         function animateFireworks() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             for (let i = particles.length - 1; i >= 0; i--) {
-                particles[i].update(); particles[i].draw();
+                particles[i].update(); 
+                particles[i].draw();
                 if (particles[i].alpha <= 0) particles.splice(i, 1);
             }
             requestAnimationFrame(animateFireworks);
         }
         animateFireworks();
-        setInterval(createFirework, 500);
+        setInterval(createFirework, 700); // إطلاق احتفالي هادئ بفاصل زمني منتظم
 
         function toggleCelebration(state) {
             isCelebrating = state !== undefined ? state : !isCelebrating;
-            if (isCelebrating) document.getElementById('track-card-el').classList.add('fusing');
-            else document.getElementById('track-card-el').classList.remove('fusing');
+            updateTimer();
         }
 
         function openModal() { document.getElementById('settings-modal').classList.add('active'); }
@@ -734,18 +826,18 @@
         }
 
         function resetToDefaults() {
-            if(confirm("هل أنت تأكد من استعادة الإعدادات الافتراضية؟")) {
-                config = {...defaultSettings};
-                localStorage.removeItem('soul_meet_config_v4');
-                initUI();
-                closeModal();
-            }
+            config = {...defaultSettings};
+            localStorage.removeItem('soul_meet_config_v5');
+            initUI();
+            closeModal();
+            showAlert('تمت إعادة التعيين للإعدادات الافتراضية!');
         }
 
         function finalizeSave() {
-            localStorage.setItem('soul_meet_config_v4', JSON.stringify(config));
+            localStorage.setItem('soul_meet_config_v5', JSON.stringify(config));
             initUI();
             closeModal();
+            showAlert('تم حفظ التغييرات بنجاح!');
         }
 
         initUI();
@@ -753,3 +845,4 @@
     </script>
 </body>
 </html>
+```
