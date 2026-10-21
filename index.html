@@ -342,6 +342,13 @@
             color: #8f95b2;
         }
 
+        .target-date-box {
+            margin-top: 12px;
+            font-size: 13px;
+            font-weight: 500;
+            opacity: 0.9;
+        }
+
         .action-btn {
             width: 100%;
             padding: 12px;
@@ -492,16 +499,16 @@
                 <div class="avatars-container">
                     <div class="person-info">
                         <div class="avatar-wrapper person1" id="wrap-p1">
-                            <img id="display-img-p1" src="./p2.jpg?w=150" class="avatar-img">
+                            <img id="display-img-p1" src="./p1.jpg" class="avatar-img">
                         </div>
-                        <span class="person-name" id="display-name-p1">مارية</span>
+                        <span class="person-name" id="display-name-p1">ابوبكر</span>
                     </div>
 
                     <div class="person-info">
                         <div class="avatar-wrapper person2" id="wrap-p2">
-                            <img id="display-img-p2" src="./p1.jpg?w=150" class="avatar-img">
+                            <img id="display-img-p2" src="./p2.jpg" class="avatar-img">
                         </div>
-                        <span class="person-name" id="display-name-p2">ابوبكر</span>
+                        <span class="person-name" id="display-name-p2">مارية</span>
                     </div>
                 </div>
 
@@ -521,9 +528,14 @@
                     <div class="time-box"><span class="time-value" id="cd-secs">00</span><span class="time-label">ثانية</span></div>
                 </div>
 
-<div id="target-date-display" style="margin-top: 12px; font-size: 13px; color: #ffb7c5; font-weight: 500; opacity: 0.9;">
-        📅 موعد اللقاء: <span id="display-date-text">--</span>
-    </div>    </div>
+                <div class="target-date-box" id="target-date-display">
+                    📅 موعد اللقاء: <span id="display-date-text">--</span>
+                </div>
+            </div>
+
+            <button class="action-btn" onclick="toggleCelebration()">✨ تبديل وضع الاحتفال والدوران</button>
+        </div>
+    </div>
 
     <div class="modal" id="settings-modal">
         <div class="modal-content">
@@ -566,21 +578,20 @@
             quote: "خطان يسيران بشوق ولهفة، ليلتقيا في موعد القدر الموعود...",
             nameP1: "ابوبكر",
             nameP2: "مارية",
-            colorP1: "#6ee7b7", // ← أصبح الآن اللون السماوي للطرف الأول
-    	       colorP2: "#ff758c", // ← أصبح الآن اللون الوردي للطرف الثاني
+            colorP1: "#6ee7b7",
+            colorP2: "#ff758c",
             textColor: "#ffb7c5",
             passcode: "2006",
-            imgP1: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150",
-            imgP2: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150"
+            imgP1: "./p1.jpg",
+            imgP2: "./p2.jpg"
         };
 
         let config = {...defaultSettings};
-        const saved = localStorage.getItem('soul_meet_config_v3');
+        const saved = localStorage.getItem('soul_meet_config_v4');
         if (saved) { try { config = JSON.parse(saved); } catch(e){} }
 
         function initUI() {
-
-     	    const d = new Date(config.targetDate);
+            const d = new Date(config.targetDate);
             const dateOptions = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
             document.getElementById('display-date-text').innerText = d.toLocaleDateString('ar-EG', dateOptions);
             document.getElementById('target-date-display').style.color = config.textColor;
@@ -704,7 +715,7 @@
         function toggleCelebration(state) {
             isCelebrating = state !== undefined ? state : !isCelebrating;
             if (isCelebrating) document.getElementById('track-card-el').classList.add('fusing');
-            else document.getElementById('track-card-el').classList.remove('fusing');
+            else document.getElementById('track-card-el').classList.add('fusing') ? document.getElementById('track-card-el').classList.remove('fusing') : document.getElementById('track-card-el').classList.remove('fusing');
         }
 
         function openModal() { document.getElementById('settings-modal').classList.add('active'); }
@@ -739,14 +750,14 @@
         function resetToDefaults() {
             if(confirm("هل أنت تأكد من استعادة الإعدادات الافتراضية؟")) {
                 config = {...defaultSettings};
-                localStorage.removeItem('soul_meet_config_v3');
+                localStorage.removeItem('soul_meet_config_v4');
                 initUI();
                 closeModal();
             }
         }
 
         function finalizeSave() {
-            localStorage.setItem('soul_meet_config_v3', JSON.stringify(config));
+            localStorage.setItem('soul_meet_config_v4', JSON.stringify(config));
             initUI();
             closeModal();
         }
