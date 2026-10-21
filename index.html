@@ -22,6 +22,7 @@
             align-items: center;
             overflow-x: hidden;
             position: relative;
+            padding: 20px;
         }
 
         /* نافذة القفل بكلمة السر */
@@ -101,42 +102,24 @@
             z-index: 5;
         }
 
-        /* حاوية الهاتف */
-        .phone-container {
+        /* حاوية الويب الأساسية بدون إطار جوال */
+        .web-container {
             width: 100%;
-            max-width: 420px;
-            height: 100vh;
-            max-height: 880px;
+            max-width: 480px;
             background: #141722;
-            border-radius: 0;
+            border-radius: 28px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
             display: flex;
             flex-direction: column;
             position: relative;
             overflow: hidden;
-        }
-
-        @media (min-width: 480px) {
-            .phone-container {
-                border-radius: 40px;
-                border: 8px solid #2a2e43;
-                height: 850px;
-            }
-        }
-
-        .status-bar {
-            height: 35px;
-            background: rgba(0, 0, 0, 0.2);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-            font-size: 12px;
-            color: #8f95b2;
+            backdrop-filter: blur(10px);
+            z-index: 10;
         }
 
         .app-header {
-            padding: 15px 20px;
+            padding: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -145,7 +128,7 @@
         }
 
         .app-title {
-            font-size: 18px;
+            font-size: 19px;
             font-weight: 700;
             color: #fff;
         }
@@ -153,30 +136,31 @@
         .icon-btn {
             background: rgba(255, 255, 255, 0.08);
             border: none;
-            width: 36px;
-            height: 36px;
+            width: 38px;
+            height: 38px;
             border-radius: 50%;
             color: #fff;
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .icon-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
         }
 
         .app-content {
-            flex: 1;
             padding: 20px;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-            overflow-y: auto;
-            z-index: 10;
+            gap: 15px;
         }
 
         .quote-box {
             text-align: center;
-            padding: 12px 15px;
+            padding: 15px;
             background: rgba(255, 255, 255, 0.03);
             border-radius: 16px;
             border: 1px solid rgba(255, 255, 255, 0.05);
@@ -201,7 +185,6 @@
             flex-direction: column;
             align-items: center;
             position: relative;
-            backdrop-filter: blur(10px);
         }
 
         .avatars-container {
@@ -222,8 +205,8 @@
         }
 
         .avatar-wrapper {
-            width: 65px;
-            height: 65px;
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
             padding: 3px;
             position: relative;
@@ -324,446 +307,4 @@
         }
 
         .time-box {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 10px 5px;
-            border-radius: 12px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .time-value {
-            font-size: 18px;
-            font-weight: 900;
-        }
-
-        .time-label {
-            font-size: 11px;
-            color: #8f95b2;
-        }
-
-        .target-date-box {
-            margin-top: 12px;
-            font-size: 13px;
-            font-weight: 500;
-            opacity: 0.9;
-        }
-
-        .action-btn {
-            width: 100%;
-            padding: 12px;
-            background: linear-gradient(135deg, #6ee7b7 0%, #3b82f6 100%);
-            border: none;
-            border-radius: 14px;
-            color: #0d0f18;
-            font-weight: 700;
-            font-size: 14px;
-            cursor: pointer;
-        }
-
-        /* نافذة الإعدادات */
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-            opacity: 0;
-            pointer-events: none;
-            transition: 0.3s ease;
-        }
-
-        .modal.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .modal-content {
-            background: #191c29;
-            width: 100%;
-            max-width: 420px;
-            max-height: 85vh;
-            border-radius: 30px 30px 0 0;
-            padding: 25px;
-            overflow-y: auto;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .close-modal {
-            background: none;
-            border: none;
-            color: #aaa;
-            font-size: 22px;
-            cursor: pointer;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 13px;
-            color: #aaa;
-            margin-bottom: 5px;
-        }
-
-        .form-group input, .form-group textarea {
-            width: 100%;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            color: #fff;
-            outline: none;
-        }
-
-        .color-row {
-            display: flex;
-            gap: 10px;
-        }
-
-        .color-row > div {
-            flex: 1;
-        }
-
-        .save-btn {
-            width: 100%;
-            padding: 12px;
-            background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
-            border: none;
-            border-radius: 12px;
-            color: white;
-            font-weight: 700;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-
-        .reset-btn {
-            width: 100%;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
-            color: #ff758c;
-            font-weight: 700;
-            cursor: pointer;
-            margin-top: 8px;
-        }
-    </style>
-</head>
-<body>
-
-    <div id="lock-screen">
-        <div class="lock-box">
-            <h2>🔒 منطقة خاصة</h2>
-            <p>أدخل رمز السر للدخول إلى عالمنا</p>
-            <input type="password" id="passcode-input" placeholder="••••">
-            <button onclick="checkPasscode()">دخول</button>
-        </div>
-    </div>
-
-    <canvas id="fireworks-canvas"></canvas>
-
-    <div class="phone-container">
-        <div class="status-bar">
-            <span id="current-time-clock">12:00</span>
-            <div><span>📶</span> <span>🔋</span></div>
-        </div>
-
-        <div class="app-header">
-            <button class="icon-btn" onclick="lockApp()">🔒</button>
-            <div class="app-title">لقاء الأرواح ✨</div>
-            <button class="icon-btn" onclick="openModal()">⚙️</button>
-        </div>
-
-        <div class="app-content">
-            <div class="quote-box">
-                <p class="quote-text" id="display-quote">خطان يسيران بشوق ولهفة، ليلتقيا في موعد القدر الموعود...</p>
-            </div>
-
-            <div class="track-card" id="track-card-el">
-                <div class="avatars-container">
-                    <div class="person-info">
-                        <div class="avatar-wrapper person1" id="wrap-p1">
-                            <img id="display-img-p1" src="./p1.jpg" class="avatar-img">
-                        </div>
-                        <span class="person-name" id="display-name-p1">ابوبكر</span>
-                    </div>
-
-                    <div class="person-info">
-                        <div class="avatar-wrapper person2" id="wrap-p2">
-                            <img id="display-img-p2" src="./p2.jpg" class="avatar-img">
-                        </div>
-                        <span class="person-name" id="display-name-p2">مارية</span>
-                    </div>
-                </div>
-
-                <div class="progress-track-bg">
-                    <div class="progress-fill-right" id="fill-p1"></div>
-                    <div class="progress-fill-left" id="fill-p2"></div>
-                </div>
-                <div class="progress-status" id="progress-status-text">جاري تقارب المسارين...</div>
-            </div>
-
-            <div class="countdown-card">
-                <div class="countdown-title">الوقت المتبقي حتى اللقاء</div>
-                <div class="countdown-grid">
-                    <div class="time-box"><span class="time-value" id="cd-days">00</span><span class="time-label">يوم</span></div>
-                    <div class="time-box"><span class="time-value" id="cd-hours">00</span><span class="time-label">ساعة</span></div>
-                    <div class="time-box"><span class="time-value" id="cd-mins">00</span><span class="time-label">دقيقة</span></div>
-                    <div class="time-box"><span class="time-value" id="cd-secs">00</span><span class="time-label">ثانية</span></div>
-                </div>
-
-                <div class="target-date-box" id="target-date-display">
-                    📅 موعد اللقاء: <span id="display-date-text">--</span>
-                </div>
-            </div>
-
-            <button class="action-btn" onclick="toggleCelebration()">✨ تبديل وضع الاحتفال والدوران</button>
-        </div>
-    </div>
-
-    <div class="modal" id="settings-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>الإعدادات</h3>
-                <button class="close-modal" onclick="closeModal()">&times;</button>
-            </div>
-
-            <div class="form-group"><label>تاريخ اللقاء</label><input type="datetime-local" id="target-date-input"></div>
-            <div class="form-group"><label>العبارة الشاعرية</label><textarea id="quote-input" rows="2"></textarea></div>
-
-            <div class="form-group color-row">
-                <div><label>لون Person 1 (يمين)</label><input type="color" id="color-p1-input"></div>
-                <div><label>لون Person 2 (يسار)</label><input type="color" id="color-p2-input"></div>
-            </div>
-
-            <div class="form-group color-row">
-                <div><label>لون العبارة والعداد</label><input type="color" id="color-text-input"></div>
-                <div><label>رمز السر الجديد</label><input type="text" id="new-passcode-input" placeholder="رمز السر"></div>
-            </div>
-
-            <div class="form-group color-row">
-                <div><label>اسم الشخص 1</label><input type="text" id="name-p1-input"></div>
-                <div><label>اسم الشخص 2</label><input type="text" id="name-p2-input"></div>
-            </div>
-
-            <div class="form-group color-row">
-                <div><label>صورة الشخص 1</label><input type="file" id="img-p1-input" accept="image/*"></div>
-                <div><label>صورة الشخص 2</label><input type="file" id="img-p2-input" accept="image/*"></div>
-            </div>
-
-            <button class="save-btn" onclick="saveSettings()">حفظ التعديلات</button>
-            <button class="reset-btn" onclick="resetToDefaults()">إعادة التعيين الافتراضية</button>
-        </div>
-    </div>
-
-    <script>
-        const defaultSettings = {
-            targetDate: "2027-06-15T00:00:00",
-            quote: "خطان يسيران بشوق ولهفة، ليلتقيا في موعد القدر الموعود...",
-            nameP1: "ابوبكر",
-            nameP2: "مارية",
-            colorP1: "#6ee7b7",
-            colorP2: "#ff758c",
-            textColor: "#ffb7c5",
-            passcode: "2006",
-            imgP1: "./p1.jpg",
-            imgP2: "./p2.jpg"
-        };
-
-        let config = {...defaultSettings};
-        const saved = localStorage.getItem('soul_meet_config_v4');
-        if (saved) { try { config = JSON.parse(saved); } catch(e){} }
-
-        function initUI() {
-            const d = new Date(config.targetDate);
-            const dateOptions = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
-            document.getElementById('display-date-text').innerText = d.toLocaleDateString('ar-EG', dateOptions);
-            document.getElementById('target-date-display').style.color = config.textColor;
-            document.getElementById('display-quote').innerText = config.quote;
-            document.getElementById('display-name-p1').innerText = config.nameP1;
-            document.getElementById('display-name-p2').innerText = config.nameP2;
-            document.getElementById('display-img-p1').src = config.imgP1;
-            document.getElementById('display-img-p2').src = config.imgP2;
-
-            document.getElementById('display-quote').style.color = config.textColor;
-            document.getElementById('display-name-p1').style.color = config.colorP1;
-            document.getElementById('display-name-p2').style.color = config.colorP2;
-            document.getElementById('wrap-p1').style.boxShadow = `0 0 15px ${config.colorP1}`;
-            document.getElementById('wrap-p2').style.boxShadow = `0 0 15px ${config.colorP2}`;
-            document.getElementById('fill-p1').style.background = `linear-gradient(90deg, transparent, ${config.colorP1})`;
-            document.getElementById('fill-p2').style.background = `linear-gradient(270deg, transparent, ${config.colorP2})`;
-
-            document.getElementById('target-date-input').value = config.targetDate.slice(0, 16);
-            document.getElementById('quote-input').value = config.quote;
-            document.getElementById('name-p1-input').value = config.nameP1;
-            document.getElementById('name-p2-input').value = config.nameP2;
-            document.getElementById('color-p1-input').value = config.colorP1;
-            document.getElementById('color-p2-input').value = config.colorP2;
-            document.getElementById('color-text-input').value = config.textColor;
-        }
-
-        function checkPasscode() {
-            if (document.getElementById('passcode-input').value === config.passcode) {
-                document.getElementById('lock-screen').style.opacity = '0';
-                setTimeout(() => document.getElementById('lock-screen').style.display = 'none', 500);
-            } else {
-                alert('كلمة السر غير صحيحة!');
-            }
-        }
-
-        function lockApp() {
-            document.getElementById('passcode-input').value = '';
-            document.getElementById('lock-screen').style.display = 'flex';
-            setTimeout(() => document.getElementById('lock-screen').style.opacity = '1', 10);
-        }
-
-        let isCelebrating = false;
-        function updateTimer() {
-            const now = new Date().getTime();
-            const target = new Date(config.targetDate).getTime();
-            const diff = target - now;
-
-            if (diff <= 0) {
-                document.getElementById('cd-days').innerText = "00";
-                document.getElementById('cd-hours').innerText = "00";
-                document.getElementById('cd-mins').innerText = "00";
-                document.getElementById('cd-secs').innerText = "00";
-                document.getElementById('progress-status-text').innerText = "✨ اكتمل اللقاء واندماج الأرواح ✨";
-                document.getElementById('track-card-el').classList.add('fusing');
-                if (!isCelebrating) toggleCelebration(true);
-                return;
-            }
-
-            document.getElementById('cd-days').innerText = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(2, '0');
-            document.getElementById('cd-hours').innerText = String(Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
-            document.getElementById('cd-mins').innerText = String(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
-            document.getElementById('cd-secs').innerText = String(Math.floor((diff % (1000 * 60)) / 1000)).padStart(2, '0');
-
-            const start = new Date("2026-01-01T00:00:00").getTime();
-            let progress = Math.max(0, Math.min(1, (now - start) / (target - start)));
-            const fillVal = (progress * 50).toFixed(1) + '%';
-            document.getElementById('fill-p1').style.width = fillVal;
-            document.getElementById('fill-p2').style.width = fillVal;
-            document.getElementById('progress-status-text').innerText = `نسبة التقارب: ${(progress * 100).toFixed(2)}%`;
-        }
-
-        setInterval(updateTimer, 1000);
-
-        // الألعاب النارية
-        const canvas = document.getElementById('fireworks-canvas');
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-
-        function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-
-        class Particle {
-            constructor(x, y, color) {
-                this.x = x; this.y = y; this.color = color;
-                const angle = Math.random() * Math.PI * 2;
-                const speed = Math.random() * 5 + 2;
-                this.vx = Math.cos(angle) * speed;
-                this.vy = Math.sin(angle) * speed;
-                this.alpha = 1;
-                this.decay = Math.random() * 0.015 + 0.008;
-            }
-            update() { this.x += this.vx; this.y += this.vy; this.vy += 0.05; this.alpha -= this.decay; }
-            draw() {
-                ctx.save(); ctx.globalAlpha = Math.max(0, this.alpha);
-                ctx.beginPath(); ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
-                ctx.fillStyle = this.color; ctx.fill(); ctx.restore();
-            }
-        }
-
-        function createFirework() {
-            if (!isCelebrating) return;
-            const x = Math.random() * canvas.width;
-            const y = Math.random() * (canvas.height * 0.6);
-            const colors = [config.colorP1, config.colorP2, config.textColor, '#ffffff'];
-            const color = colors[Math.floor(Math.random() * colors.length)];
-            for (let i = 0; i < 35; i++) particles.push(new Particle(x, y, color));
-        }
-
-        function animateFireworks() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let i = particles.length - 1; i >= 0; i--) {
-                particles[i].update(); particles[i].draw();
-                if (particles[i].alpha <= 0) particles.splice(i, 1);
-            }
-            requestAnimationFrame(animateFireworks);
-        }
-        animateFireworks();
-        setInterval(createFirework, 500);
-
-        function toggleCelebration(state) {
-            isCelebrating = state !== undefined ? state : !isCelebrating;
-            if (isCelebrating) document.getElementById('track-card-el').classList.add('fusing');
-            else document.getElementById('track-card-el').classList.add('fusing') ? document.getElementById('track-card-el').classList.remove('fusing') : document.getElementById('track-card-el').classList.remove('fusing');
-        }
-
-        function openModal() { document.getElementById('settings-modal').classList.add('active'); }
-        function closeModal() { document.getElementById('settings-modal').classList.remove('active'); }
-
-        function saveSettings() {
-            config.targetDate = document.getElementById('target-date-input').value;
-            config.quote = document.getElementById('quote-input').value;
-            config.nameP1 = document.getElementById('name-p1-input').value;
-            config.nameP2 = document.getElementById('name-p2-input').value;
-            config.colorP1 = document.getElementById('color-p1-input').value;
-            config.colorP2 = document.getElementById('color-p2-input').value;
-            config.textColor = document.getElementById('color-text-input').value;
-
-            const newPass = document.getElementById('new-passcode-input').value;
-            if (newPass.trim() !== '') config.passcode = newPass.trim();
-
-            const fileP1 = document.getElementById('img-p1-input').files[0];
-            const fileP2 = document.getElementById('img-p2-input').files[0];
-
-            if (fileP1) {
-                const reader = new FileReader();
-                reader.onload = function(e) { config.imgP1 = e.target.result; finalizeSave(); };
-                reader.readAsDataURL(fileP1);
-            } else if (fileP2) {
-                const reader = new FileReader();
-                reader.onload = function(e) { config.imgP2 = e.target.result; finalizeSave(); };
-                reader.readAsDataURL(fileP2);
-            } else { finalizeSave(); }
-        }
-
-        function resetToDefaults() {
-            if(confirm("هل أنت تأكد من استعادة الإعدادات الافتراضية؟")) {
-                config = {...defaultSettings};
-                localStorage.removeItem('soul_meet_config_v4');
-                initUI();
-                closeModal();
-            }
-        }
-
-        function finalizeSave() {
-            localStorage.setItem('soul_meet_config_v4', JSON.stringify(config));
-            initUI();
-            closeModal();
-        }
-
-        initUI();
-        updateTimer();
-    </script>
-</body>
-</html>
+            background: rgba(255, 
